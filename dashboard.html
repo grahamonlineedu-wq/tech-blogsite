@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Dashboard Admin</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Auth Section -->
+        <div id="login-section" class="form-card">
+            <h2>Admin Secure Login</h2>
+            <form id="login-form">
+                <input type="email" id="login-email" placeholder="Admin Email" required>
+                <input type="password" id="login-password" placeholder="Password" required>
+                <button type="submit">Log In</button>
+            </form>
+            <p id="login-error" class="error-msg" style="display:none;"></p>
+        </div>
+
+        <!-- Main Dashboard Control Panel (Hidden by default until logged in) -->
+        <div id="admin-panel" style="display: none;">
+            <header class="dash-header">
+                <h1>Welcome to Your Dashboard</h1>
+                <button id="logout-btn">Log Out</button>
+            </header>
+
+            <!-- Metrics Displays -->
+            <section class="metrics-grid">
+                <div class="metric-card">Total Posts: <span id="stat-total">0</span></div>
+                <div class="metric-card">Published: <span id="stat-pub">0</span></div>
+                <div class="metric-card">Drafts: <span id="stat-draft">0</span></div>
+            </section>
+
+            <!-- Create New Post Form -->
+            <div class="form-card">
+                <h3>Write a New Blog Post</h3>
+                <form id="post-form">
+                    <input type="text" id="post-title" placeholder="Post Title" required>
+                    <input type="text" id="post-slug" placeholder="URL Slug (e.g., my-first-post)" required>
+                    <input type="text" id="post-summary" placeholder="Short Summary Paragraph" required>
+                    <textarea id="post-content" rows="8" placeholder="Write your full content here..." required></textarea>
+                    
+                    <select id="post-status">
+                        <option value="draft">Save as Draft</option>
+                        <option value="published">Publish Immediately</option>
+                    </select>
+                    <button type="submit">Save Entry</button>
+                </form>
+                <p id="post-message" class="success-msg" style="display:none;"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
+

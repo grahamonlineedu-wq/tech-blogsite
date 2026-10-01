@@ -1,0 +1,16 @@
+// Get a single post by its unique URL slug
+router.get('/posts/:slug', async (req, res) => {
+    try {
+        const post = await Post.findOne({ slug: req.body.slug || req.params.slug });
+        if (!post) return res.status(404).json({ error: 'Post not found' });
+
+        // Increment post views counter automatically
+        post.views += 1;
+        await post.save();
+
+        res.json(post);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
