@@ -11,13 +11,17 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files from the project root so the existing HTML/CSS/JS files work.
+// Serve the frontend files from the project root
 app.use(express.static(path.join(__dirname)));
 
 app.use('/api', require('./routes/api'));
 
 app.get('/posts/:slug', (req, res) => {
     res.sendFile(path.join(__dirname, 'post.html'));
+});
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.get('*', (req, res) => {
