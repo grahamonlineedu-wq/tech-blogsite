@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post - Tech Blog</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <h1><a href="/">Tech Blog</a></h1>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/">Back to Posts</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <article id="post-content" class="post-full">
+                <p class="loading">Loading post...</p>
+            </article>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Tech Blog. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', loadPost);
+
+        async function loadPost() {
+            const slug = window.location.pathname.split('/posts/')[1];
+            const container = document.getElementById('post-content');
+
+            try {
+                const response = await fetch(`/api/posts/${slug}`);
+                
+                if (!response.ok) {
+                    throw new Error('Post not found');
+                }
+
+                const post = await response.json();
+
+                container.innerHTML = `
+                    <h1>${post.title}</h1>
+                    <p class="post-meta">By ${post.author} on ${new Date(post.createdAt).toLocaleDateString()}</p>
+                    <div class="post-body">${post.content}</div>
+                `;
+            } catch (error) {
+                console.error('Error loading post:', error);
+                container.innerHTML = '<p class="error-msg">Unable to load this post. <a href="/">Return to home</a></p>';
+            }
+        }
+    </script>
+</body>
+</html>
